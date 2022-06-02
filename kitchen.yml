@@ -1,0 +1,39 @@
+---
+driver:
+  name: dokken
+  chef_version: 17
+  pull_platform_image: false
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+  multiple_converge: 2
+
+platforms:
+  - name: centos-7
+    driver:
+      image: 'dokken/centos-7'
+  - name: centos-8
+    driver:
+      image: 'dokken/centos-8'
+
+suites:
+  - name: python3
+    run_list:
+      - recipe[python3-test::default]
+    attributes:
+  - name: python3-pypy3
+    run_list:
+      - recipe[python3-test::default]
+    attributes:
+      python3:
+        source: 'portable_pypy3'
+        version: '3.9-v7.3.9'
+  - name: python3-chef-14
+    run_list:
+      - recipe[python3-test::default]
+    attributes:
+    driver:
+      chef_version: 14.7.17
