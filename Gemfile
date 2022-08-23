@@ -13,7 +13,7 @@ gem 'kitchen-transport-speedy'
 gem 'criteo-kitchen-configs'
 group :ec2 do
   gem 'test-kitchen'
-  gem 'kitchen-ec2'# , git: 'https://github.com/criteo-forks/kitchen-ec2.git', branch: 'criteo'
+  gem 'kitchen-ec2'
   gem 'winrm',       '>= 1.6'
   gem 'winrm-fs',    '>= 0.3'
   gem 'dotenv'
@@ -23,3 +23,5 @@ end
 gem 'rubocop', '=1.29.1'
 
 gem 'chef-cli'
+
+gem 'json', '~> 2.6'
