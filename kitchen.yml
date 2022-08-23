@@ -10,6 +10,7 @@ transport:
 provisioner:
   name: dokken
   multiple_converge: 2
+  named_run_list: test
 
 platforms:
   - name: centos-7
