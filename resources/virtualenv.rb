@@ -11,7 +11,7 @@ property :python_provider, kind_of: String, default: lazy { node['python3']['sou
 property :python_checksum, kind_of: [String, FalseClass], default: lazy { node['python3']['checksum'] }
 
 load_current_value do |new_resource|
-  current_value_does_not_exist! unless ::File.exists?(::File.join(new_resource.virtualenv, 'bin/activate'))
+  current_value_does_not_exist! unless ::File.exist?(::File.join(new_resource.virtualenv, 'bin/activate'))
 end
 
 action :create do

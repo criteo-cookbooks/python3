@@ -12,7 +12,6 @@ property :python_provider, kind_of: String, default: lazy { node['python3']['sou
 
 load_current_value do |new_resource|
   packages = ::Kernel.Array(new_resource.package_name)
-  versions = ::Kernel.Array(new_resource.version)
   current_versions = []
   packages.each do |pkg|
     v = ::Python3::Pip.check_package_version(pkg.downcase, ::Python3::Path.virtualenv(new_resource))
@@ -21,11 +20,11 @@ load_current_value do |new_resource|
   end
 
   if packages.size == 1
-    package_name = packages.first
-    version = current_versions.first
+    package_name packages.first
+    version current_versions.first
   else
-    package_name = packages
-    version = current_versions
+    package_name packages
+    version current_versions
   end
 end
 
@@ -49,4 +48,3 @@ def install_package(virtualenv, pkg, version)
 
   Mixlib::ShellOut.new("#{::Python3::Pip.path(virtualenv)} install #{pkg}").run_command
 end
-

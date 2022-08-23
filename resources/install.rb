@@ -15,7 +15,7 @@ property :virtualenv_version, kind_of: [String, TrueClass, FalseClass], default:
 load_current_value do |new_resource|
   python_binary = ::Python3::Path.python_binary(new_resource)
 
-  current_value_does_not_exist! unless ::File.exists?(python_binary)
+  current_value_does_not_exist! unless ::File.exist?(python_binary)
 
   if new_resource.source != 'portable_pypy3'
     pyversion = ::Mixlib::ShellOut.new("#{python_binary} --version").run_command.stdout.match('\s+(^[0-9\.]+)')&.last_match(1)
@@ -30,7 +30,6 @@ end
 
 action :install do
   converge_if_changed :version do
-
     if new_resource.source == 'portable_pypy3'
       package 'bzip2'
 

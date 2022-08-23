@@ -7,4 +7,3 @@ default['python3']['pip']['virtualenv_version'] = true
 default['python3']['version'] = false
 default['python3']['name'] = 'python3'
 default['python3']['pkg_options'] = false
-
