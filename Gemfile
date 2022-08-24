@@ -10,7 +10,6 @@ gem 'chef-dk'
 gem 'kitchen-dokken'
 
 gem 'kitchen-transport-speedy'
-gem 'criteo-kitchen-configs'
 group :ec2 do
   gem 'test-kitchen'
   gem 'kitchen-ec2'
