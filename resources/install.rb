@@ -1,16 +1,16 @@
 provides :python_install
 
-property :version, kind_of: [String, FalseClass], default: lazy { node['python3']['version'] }
-property :source, kind_of: String, default: lazy { node['python3']['source'] }
-property :checksum, kind_of: [String, FalseClass], default: lazy { node['python3']['checksum'] }
-property :pkg_options, kind_of: [String, FalseClass], default: lazy { node['python3']['pkg_options'] }
+property :version, [String, FalseClass], default: lazy { node['python3']['version'] }
+property :source, String, default: lazy { node['python3']['source'] }
+property :checksum, [String, FalseClass], default: lazy { node['python3']['checksum'] }
+property :pkg_options, [String, FalseClass], default: lazy { node['python3']['pkg_options'] }
 
-property :get_pip_url, kind_of: String, default: lazy { node['python3']['pip']['url'] }
-property :get_pip_checksum, kind_of: String, default: lazy { node['python3']['pip']['checksum'] }
-property :pip_version, kind_of: [String, TrueClass, FalseClass], default: lazy { node['python3']['pip']['version'] }
-property :setuptools_version, kind_of: [String, TrueClass, FalseClass], default: true
-property :wheel_version, kind_of: [String, TrueClass, FalseClass], default: true
-property :virtualenv_version, kind_of: [String, TrueClass, FalseClass], default: true
+property :get_pip_url, String, default: lazy { node['python3']['pip']['url'] }
+property :get_pip_checksum, String, default: lazy { node['python3']['pip']['checksum'] }
+property :pip_version, [String, TrueClass, FalseClass], default: lazy { node['python3']['pip']['version'] }
+property :setuptools_version, [String, TrueClass, FalseClass], default: true
+property :wheel_version, [String, TrueClass, FalseClass], default: true
+property :virtualenv_version, [String, TrueClass, FalseClass], default: true
 
 load_current_value do |new_resource|
   python_binary = ::Python3::Path.python_binary(new_resource)
