@@ -8,7 +8,7 @@ property :group, [String, Integer, NilClass]
 property :user, [String, Integer, NilClass]
 
 property :python_version, [String, FalseClass], default: lazy { node['python3']['version'] }
-property :python_provider, String, default: lazy { node['python3']['source'] }
+property :python_provider, [String, nil], default: lazy { node['python3']['source'] }
 
 load_current_value do |new_resource|
   packages = ::Kernel.Array(new_resource.package_name)

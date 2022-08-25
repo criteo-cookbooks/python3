@@ -1,8 +1,8 @@
 provides :python_install
 
 property :version, [String, FalseClass], default: lazy { node['python3']['version'] }
-property :source, String, default: lazy { node['python3']['source'] }
-property :checksum, [String, FalseClass], default: lazy { node['python3']['checksum'] }
+property :source, [String, nil], default: lazy { node['python3']['source'] }
+property :checksum, [String, nil], default: lazy { node['python3']['checksum'] }
 property :pkg_options, [String, FalseClass], default: lazy { node['python3']['pkg_options'] }
 
 property :get_pip_url, String, default: lazy { node['python3']['pip']['url'] }

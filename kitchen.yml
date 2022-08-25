@@ -32,6 +32,7 @@ suites:
       python3:
         source: 'portable_pypy3'
         version: '3.9-v7.3.9'
+        checksum: '46818cb3d74b96b34787548343d266e2562b531ddbaf330383ba930ff1930ed5'
   - name: python3-chef-14
     run_list:
       - recipe[python3-test::default]

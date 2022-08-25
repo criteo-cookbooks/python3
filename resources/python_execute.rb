@@ -9,7 +9,7 @@ property :user, [String, Integer, NilClass]
 property :environment, Hash
 
 property :python_version, [String, FalseClass], default: lazy { node['python3']['version'] }
-property :python_provider, String, default: lazy { node['python3']['source'] }
+property :python_provider, [String, nil], default: lazy { node['python3']['source'] }
 
 action :run do
   execute new_resource.name do
