@@ -29,7 +29,7 @@ jobs:
       matrix:
         instance: ['python3-centos-7', 'python3-centos-8',
                    'python3-pypy3-centos-7', 'python3-pypy3-centos-8',
-                   'python3-chef-14-centos-7', 'python3-chef-14-centos-8']
+                   'python3-chef-14-centos-7']
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
