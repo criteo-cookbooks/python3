@@ -1,15 +1,15 @@
 provides :python_runtime
 
-property :get_pip_url, kind_of: String, default: lazy { node['python3']['pip']['url'] }
-property :get_pip_checksum, kind_of: String, default: lazy { node['python3']['pip']['checksum'] }
-property :pip_version, kind_of: [String, TrueClass, FalseClass], desired_state: true, identity: true, default: lazy { node['python3']['pip']['version'] }
-property :setuptools_version, kind_of: [String, TrueClass, FalseClass], default: true
-property :wheel_version, kind_of: [String, TrueClass, FalseClass], default: true
-property :virtualenv_version, kind_of: [String, TrueClass, FalseClass], default: true
+property :get_pip_url, String, default: lazy { node['python3']['pip']['url'] }
+property :get_pip_checksum, String, default: lazy { node['python3']['pip']['checksum'] }
+property :pip_version, [String, TrueClass, FalseClass], desired_state: true, identity: true, default: lazy { node['python3']['pip']['version'] }
+property :setuptools_version, [String, TrueClass, FalseClass], default: true
+property :wheel_version, [String, TrueClass, FalseClass], default: true
+property :virtualenv_version, [String, TrueClass, FalseClass], default: true
 
-property :python_version, kind_of: [String, FalseClass], default: lazy { node['python3']['version'] }
-property :python_provider, kind_of: String, default: lazy { node['python3']['source'] }
-property :python_checksum, kind_of: [String, FalseClass], default: lazy { node['python3']['checksum'] }
+property :python_version, [String, FalseClass], default: lazy { node['python3']['version'] }
+property :python_provider, [String, nil], default: lazy { node['python3']['source'] }
+property :python_checksum, [String, nil], default: lazy { node['python3']['checksum'] }
 
 load_current_value do |new_resource|
   version = ::Python3.pip_version(new_resource)

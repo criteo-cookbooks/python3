@@ -4,7 +4,7 @@
 # - submit the change in the code_generator
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.7
 
 
 # This requires to alphabetically sort Gem's requirements
@@ -45,9 +45,8 @@ Style/TrailingCommaInHashLiteral:
 #   }
 #
 ### Align hashes as a table
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedColonStyle: table
-  EnforcedHashRocketStyle: key
 # When dealing with long key names, it is easier to read hashes in colon
 # notation aligned as tables. However, the same does not seem to hold true
 # for hashes in rocket notation due to strange alignment rules.
@@ -96,11 +95,6 @@ Style/FormatString:
 
 # Really practical. Use with moderation though for readability
 Style/MultilineBlockChain:
-  Enabled: false
-
-# We ain't serving subseconds requests. Forcing to use tr instead of gsub will
-# be annoying without much value
-Performance/StringReplacement:
   Enabled: false
 
 # We don't write documentation there at the moment

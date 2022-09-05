@@ -1,21 +1,21 @@
 provides :python_install
 
-property :version, kind_of: [String, FalseClass], default: lazy { node['python3']['version'] }
-property :source, kind_of: String, default: lazy { node['python3']['source'] }
-property :checksum, kind_of: [String, FalseClass], default: lazy { node['python3']['checksum'] }
-property :pkg_options, kind_of: [String, FalseClass], default: lazy { node['python3']['pkg_options'] }
+property :version, [String, FalseClass], default: lazy { node['python3']['version'] }
+property :source, [String, nil], default: lazy { node['python3']['source'] }
+property :checksum, [String, nil], default: lazy { node['python3']['checksum'] }
+property :pkg_options, [String, FalseClass], default: lazy { node['python3']['pkg_options'] }
 
-property :get_pip_url, kind_of: String, default: lazy { node['python3']['pip']['url'] }
-property :get_pip_checksum, kind_of: String, default: lazy { node['python3']['pip']['checksum'] }
-property :pip_version, kind_of: [String, TrueClass, FalseClass], default: lazy { node['python3']['pip']['version'] }
-property :setuptools_version, kind_of: [String, TrueClass, FalseClass], default: true
-property :wheel_version, kind_of: [String, TrueClass, FalseClass], default: true
-property :virtualenv_version, kind_of: [String, TrueClass, FalseClass], default: true
+property :get_pip_url, String, default: lazy { node['python3']['pip']['url'] }
+property :get_pip_checksum, String, default: lazy { node['python3']['pip']['checksum'] }
+property :pip_version, [String, TrueClass, FalseClass], default: lazy { node['python3']['pip']['version'] }
+property :setuptools_version, [String, TrueClass, FalseClass], default: true
+property :wheel_version, [String, TrueClass, FalseClass], default: true
+property :virtualenv_version, [String, TrueClass, FalseClass], default: true
 
 load_current_value do |new_resource|
   python_binary = ::Python3::Path.python_binary(new_resource)
 
-  current_value_does_not_exist! unless ::File.exists?(python_binary)
+  current_value_does_not_exist! unless ::File.exist?(python_binary)
 
   if new_resource.source != 'portable_pypy3'
     pyversion = ::Mixlib::ShellOut.new("#{python_binary} --version").run_command.stdout.match('\s+(^[0-9\.]+)')&.last_match(1)
@@ -30,7 +30,6 @@ end
 
 action :install do
   converge_if_changed :version do
-
     if new_resource.source == 'portable_pypy3'
       package 'bzip2'
 

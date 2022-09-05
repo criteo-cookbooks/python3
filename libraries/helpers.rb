@@ -4,7 +4,7 @@ module Python3
       path = if resource.respond_to?(:virtualenv) && !resource.virtualenv.nil?
                resource.virtualenv
              else
-               self.python_system_path(resource)
+               python_system_path(resource)
              end
 
       ::File.join(path, 'bin/python3')
@@ -33,10 +33,10 @@ module Python3
     end
 
     def self.virtualenv(resource = new_resource)
-      resource.virtualenv || self.python_path(resource)
+      resource.virtualenv || python_path(resource)
     end
 
-    def self.pip_path(resource = new_resource, system = false)
+    def self.pip_path(resource = new_resource, system: false)
       path = if resource.respond_to?(:virtualenv) && !resource.virtualenv.nil? && !system
                resource.virtualenv
              elsif resource.python_provider == 'portable_pypy3'
@@ -49,12 +49,11 @@ module Python3
     end
 
     def self.pip_binary(resource = new_resource)
-      ::File.join(self.pip_path(resource), 'bin/pip3')
+      ::File.join(pip_path(resource), 'bin/pip3')
     end
 
     def self.virtualenv_binary(resource = new_resource)
-      ::File.join(self.pip_path(resource, true), 'bin/virtualenv')
+      ::File.join(pip_path(resource, system: true), 'bin/virtualenv')
     end
   end
-
 end
