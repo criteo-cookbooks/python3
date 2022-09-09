@@ -1,5 +1,6 @@
 provides :python_install
 
+property :package_name, [String], default: lazy { node['python3']['name'] }
 property :version, [String, FalseClass], default: lazy { node['python3']['version'] }
 property :source, [String, nil], default: lazy { node['python3']['source'] }
 property :checksum, [String, nil], default: lazy { node['python3']['checksum'] }
@@ -30,6 +31,7 @@ end
 
 action :install do
   converge_if_changed :version do
+    valid_name_regex = /^python3\d?$/
     if new_resource.source == 'portable_pypy3'
       package 'bzip2'
 
@@ -50,9 +52,11 @@ action :install do
       execute "tar -xjf #{pypy_archive} -C #{pypy_directory} --strip-components=1" do
         creates ::File.join(pypy_directory, 'bin/python3')
       end
-
+    elsif !new_resource.package_name.match(valid_name_regex)
+      ::Chef::Log.warn("Trying to install #{new_resource.package_name}. This does not look like a python3 package.")
+      return
     else
-      package 'python3' do
+      package new_resource.package_name do
         version new_resource.version if new_resource.version
         options new_resource.pkg_options if new_resource.pkg_options
       end
