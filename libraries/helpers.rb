@@ -7,7 +7,7 @@ module Python3
                python_system_path(resource)
              end
 
-      ::File.join(path, 'bin/python3')
+      ::File.join(path, 'bin', resource.binary_name)
     end
 
     def self.python_path(resource = new_resource)

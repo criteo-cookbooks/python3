@@ -4,4 +4,4 @@
 #
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
-python_install 'python3'
+python_install node['python3']['name']

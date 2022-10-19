@@ -8,8 +8,9 @@ property :wheel_version, [String, TrueClass, FalseClass], default: true
 property :virtualenv_version, [String, TrueClass, FalseClass], default: true
 
 property :python_version, [String, FalseClass], default: lazy { node['python3']['version'] }
-property :python_provider, [String, nil], default: lazy { node['python3']['source'] }
-property :python_checksum, [String, nil], default: lazy { node['python3']['checksum'] }
+property :python_provider, String, default: lazy { node['python3']['source'] }
+property :python_checksum, [String, FalseClass], default: lazy { node['python3']['checksum'] }
+property :binary_name, String, default: lazy { node['python3']['binary_name'] }
 
 load_current_value do |new_resource|
   version = ::Python3.pip_version(new_resource)
@@ -24,7 +25,7 @@ end
 action :install do
   get_pip_location = ::File.join(::Chef::Config['cache_path'], 'get-pip.py')
 
-  python_install 'python3' do
+  python_install node['python3']['name'] do
     version new_resource.python_version
     source new_resource.python_provider
     checksum new_resource.python_checksum

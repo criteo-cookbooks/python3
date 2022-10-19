@@ -4,7 +4,7 @@
 #
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
-python_install 'python3'
+python_install node['python3']['name']
 
 python_package 'flask' do
   version '2.0.1'

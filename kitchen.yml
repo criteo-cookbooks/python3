@@ -25,7 +25,16 @@ suites:
     run_list:
       - recipe[python3-test::default]
     attributes:
+  - name: python39
+    run_list:
+      - recipe[python3-test::default]
+    excludes:
+      - centos-7
+    attributes:
+      python3:
+        name: 'python39'
   - name: python3-pypy3
+
     run_list:
       - recipe[python3-test::default]
     attributes:

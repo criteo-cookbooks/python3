@@ -15,7 +15,7 @@ load_current_value do |new_resource|
 end
 
 action :create do
-  python_install 'python3' do
+  python_install node['python3']['name'] do
     version new_resource.python_version
     source new_resource.python_provider
     checksum new_resource.python_checksum
