@@ -23,7 +23,7 @@ action :create do
     checksum new_resource.python_checksum
   end
 
-  cmd = "#{::Python3::Path.virtualenv_binary(new_resource)}"
+  cmd = ::Python3::Path.virtualenv_binary(new_resource)
   cmd += " --pip #{new_resource.pip_version}" if new_resource.pip_version
   cmd += " --python #{new_resource.binary_name}" if new_resource.binary_name
   cmd += " #{new_resource.virtualenv}"

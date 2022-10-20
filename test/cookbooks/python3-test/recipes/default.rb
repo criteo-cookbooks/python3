@@ -5,7 +5,6 @@
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
 node['python3_test']['pythons'].each_with_index do |python, idx|
-
   python_install python['name'] do
     pip_binary_name python['pip_binary_name']
     binary_name python['binary_name']
@@ -27,5 +26,4 @@ node['python3_test']['pythons'].each_with_index do |python, idx|
     virtualenv "/opt/blah-#{idx}"
     pip_binary_name python['pip_binary_name']
   end
-
 end
