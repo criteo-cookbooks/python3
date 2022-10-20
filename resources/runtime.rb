@@ -8,7 +8,7 @@ property :wheel_version, [String, TrueClass, FalseClass], default: true
 property :virtualenv_version, [String, TrueClass, FalseClass], default: true
 
 property :python_version, [String, FalseClass], default: lazy { node['python3']['version'] }
-property :python_provider, String, default: lazy { node['python3']['source'] }
+property :python_provider, [String, FalseClass], default: lazy { node['python3']['source'] }
 property :python_checksum, [String, FalseClass], default: lazy { node['python3']['checksum'] }
 property :binary_name, String, default: lazy { node['python3']['binary_name'] }
 

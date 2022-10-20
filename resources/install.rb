@@ -1,7 +1,7 @@
 provides :python_install
 
 property :version, [String, FalseClass], default: lazy { node['python3']['version'] }
-property :source, String, default: lazy { node['python3']['source'] }
+property :source, [String, FalseClass], default: lazy { node['python3']['source'] }
 property :checksum, [String, FalseClass], default: lazy { node['python3']['checksum'] }
 property :pkg_options, [String, FalseClass], default: lazy { node['python3']['pkg_options'] }
 property :binary_name, String, default: lazy { node['python3']['binary_name'] }
