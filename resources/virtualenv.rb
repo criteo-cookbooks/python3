@@ -10,6 +10,7 @@ property :pip_binary_name, [String, TrueClass, FalseClass], default: lazy { node
 property :python_version, [String, FalseClass], default: lazy { node['python3']['version'] }
 property :python_provider, [String, FalseClass], default: lazy { node['python3']['source'] }
 property :python_checksum, [String, FalseClass], default: lazy { node['python3']['checksum'] }
+property :binary_name, [String, FalseClass], default: lazy { node['python3']['binary_name'] }
 
 load_current_value do |new_resource|
   current_value_does_not_exist! unless ::File.exist?(::File.join(new_resource.virtualenv, 'bin/activate'))
@@ -22,8 +23,10 @@ action :create do
     checksum new_resource.python_checksum
   end
 
-  cmd = "#{::Python3::Path.virtualenv_binary(new_resource)} #{new_resource.virtualenv}"
+  cmd = "#{::Python3::Path.virtualenv_binary(new_resource)}"
   cmd += " --pip #{new_resource.pip_version}" if new_resource.pip_version
+  cmd += " --python #{new_resource.binary_name}" if new_resource.binary_name
+  cmd += " #{new_resource.virtualenv}"
 
   execute cmd do
     user new_resource.user
