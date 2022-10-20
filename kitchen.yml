@@ -58,6 +58,8 @@ suites:
         source: 'portable_pypy3'
         version: '3.9-v7.3.9'
         checksum: '46818cb3d74b96b34787548343d266e2562b531ddbaf330383ba930ff1930ed5'
+        pip_binary_name: 'pip3.9'
+        binary_name: 'pypy3.9'
   - name: python3-chef-14
     excludes:
       # dnf provider on Chef < 16 is broken
