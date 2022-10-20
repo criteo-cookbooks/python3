@@ -1,10 +1,10 @@
 provides :python_install
 
-property :package_name, [String], default: lazy { node['python3']['name'] }
 property :version, [String, FalseClass], default: lazy { node['python3']['version'] }
-property :source, [String, nil], default: lazy { node['python3']['source'] }
-property :checksum, [String, nil], default: lazy { node['python3']['checksum'] }
+property :source, [String, FalseClass], default: lazy { node['python3']['source'] }
+property :checksum, [String, FalseClass], default: lazy { node['python3']['checksum'] }
 property :pkg_options, [String, FalseClass], default: lazy { node['python3']['pkg_options'] }
+property :binary_name, String, default: lazy { node['python3']['binary_name'] }
 
 property :get_pip_url, String, default: lazy { node['python3']['pip']['url'] }
 property :get_pip_checksum, String, default: lazy { node['python3']['pip']['checksum'] }
@@ -20,10 +20,7 @@ load_current_value do |new_resource|
 
   if new_resource.source != 'portable_pypy3'
     pyversion = ::Mixlib::ShellOut.new("#{python_binary} --version").run_command.stdout.match('\s+(^[0-9\.]+)')&.last_match(1)
-    if new_resource.version
-      ::Chef::Log.warn("Found some version #{pyversion} -- vs #{new_resource.version}")
-      version pyversion
-    end
+    version pyversion if new_resource.version
   else
     version new_resource.version
   end
@@ -52,11 +49,11 @@ action :install do
       execute "tar -xjf #{pypy_archive} -C #{pypy_directory} --strip-components=1" do
         creates ::File.join(pypy_directory, 'bin/python3')
       end
-    elsif !new_resource.package_name.match(valid_name_regex)
-      ::Chef::Log.warn("Trying to install #{new_resource.package_name}. This does not look like a python3 package.")
+    elsif !new_resource.name.match(valid_name_regex)
+      ::Chef::Log.warn("Trying to install #{new_resource.name}. This does not look like a python3 package.")
       return
     else
-      package new_resource.package_name do
+      package new_resource.name do
         version new_resource.version if new_resource.version
         options new_resource.pkg_options if new_resource.pkg_options
       end

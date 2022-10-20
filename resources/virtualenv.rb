@@ -7,15 +7,15 @@ property :user, [String, Integer, NilClass]
 property :pip_version, String
 
 property :python_version, [String, FalseClass], default: lazy { node['python3']['version'] }
-property :python_provider, [String, nil], default: lazy { node['python3']['source'] }
-property :python_checksum, [String, nil], default: lazy { node['python3']['checksum'] }
+property :python_provider, [String, FalseClass], default: lazy { node['python3']['source'] }
+property :python_checksum, [String, FalseClass], default: lazy { node['python3']['checksum'] }
 
 load_current_value do |new_resource|
   current_value_does_not_exist! unless ::File.exist?(::File.join(new_resource.virtualenv, 'bin/activate'))
 end
 
 action :create do
-  python_install 'python3' do
+  python_install node['python3']['name'] do
     version new_resource.python_version
     source new_resource.python_provider
     checksum new_resource.python_checksum
