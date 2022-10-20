@@ -4,7 +4,8 @@ property :virtualenv, String, name_property: true
 property :system_site_packages, equal_to: [true, false], default: false
 property :group, [String, Integer, NilClass]
 property :user, [String, Integer, NilClass]
-property :pip_version, String
+property :pip_version, [String, TrueClass, FalseClass], default: lazy { node['python3']['pip']['version'] }
+property :pip_binary_name, [String, TrueClass, FalseClass], default: lazy { node['python3']['pip']['binary_name'] }
 
 property :python_version, [String, FalseClass], default: lazy { node['python3']['version'] }
 property :python_provider, [String, FalseClass], default: lazy { node['python3']['source'] }

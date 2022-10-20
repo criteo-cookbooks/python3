@@ -9,6 +9,7 @@ property :binary_name, String, default: lazy { node['python3']['binary_name'] }
 property :get_pip_url, String, default: lazy { node['python3']['pip']['url'] }
 property :get_pip_checksum, String, default: lazy { node['python3']['pip']['checksum'] }
 property :pip_version, [String, TrueClass, FalseClass], default: lazy { node['python3']['pip']['version'] }
+property :pip_binary_name, [String, TrueClass, FalseClass], default: lazy { node['python3']['pip']['binary_name'] }
 property :setuptools_version, [String, TrueClass, FalseClass], default: true
 property :wheel_version, [String, TrueClass, FalseClass], default: true
 property :virtualenv_version, [String, TrueClass, FalseClass], default: true
@@ -63,6 +64,7 @@ action :install do
       get_pip_checksum new_resource.get_pip_checksum
       get_pip_url new_resource.get_pip_url
       pip_version new_resource.pip_version
+      pip_binary_name new_resource.pip_binary_name
       setuptools_version new_resource.setuptools_version
       wheel_version new_resource.wheel_version
       virtualenv_version new_resource.virtualenv_version
@@ -70,6 +72,8 @@ action :install do
       python_provider new_resource.source
       python_version new_resource.version
       python_checksum new_resource.checksum
+      python_name new_resource.name
+      binary_name new_resource.binary_name
     end
   end
 end
