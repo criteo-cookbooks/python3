@@ -33,7 +33,11 @@ module Python3
     end
 
     def self.virtualenv(resource = new_resource)
-      resource.virtualenv || python_path(resource)
+      if resource.respond_to?(:virtualenv) && !resource.virtualenv.nil?
+        resource.virtualenv
+      else
+        python_path(resource)
+      end
     end
 
     def self.pip_path(resource = new_resource, system: false)
