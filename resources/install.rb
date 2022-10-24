@@ -29,7 +29,7 @@ end
 
 action :install do
   converge_if_changed :version do
-    valid_name_regex = /^python3\d?$/
+    valid_name_regex = /^python3\.?\d?$/
     if new_resource.source == 'portable_pypy3'
       package 'bzip2'
 
