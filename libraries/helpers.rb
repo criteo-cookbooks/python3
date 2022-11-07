@@ -55,9 +55,5 @@ module Python3
     def self.pip_binary(resource = new_resource)
       ::File.join(pip_path(resource), 'bin/pip3')
     end
-
-    def self.virtualenv_binary(resource = new_resource)
-      ::File.join(pip_path(resource, system: true), 'bin/virtualenv')
-    end
   end
 end
