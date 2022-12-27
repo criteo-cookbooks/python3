@@ -13,23 +13,19 @@ module Python3
     def self.python_path(resource = new_resource)
       return ::File.join(resource.virtualenv, 'bin/python3') if resource.respond_to?(:virtualenv) && !resource.virtualenv.nil?
 
-      if resource.python_provider == 'portable_pypy3'
-        "/usr/local/pypy#{resource.python_version}"
+      if (pypy = pypy_version(resource))
+        "/usr/local/pypy#{pypy}"
       else
         '/usr/local/'
       end
     end
 
     def self.python_system_path(resource = new_resource)
-      if resource.respond_to?(:python_provider)
-        provider = resource.python_provider
-        version = resource.python_version
+      if (pypy = pypy_version(resource))
+        ::File.join("/usr/local/pypy#{pypy}")
       else
-        provider = resource.source
-        version = resource.version
+        '/usr'
       end
-
-      provider == 'portable_pypy3' ? ::File.join("/usr/local/pypy#{version}") : '/usr'
     end
 
     def self.virtualenv(resource = new_resource)
@@ -41,23 +37,26 @@ module Python3
     end
 
     def self.pip_path(resource = new_resource, system: false)
-      path = if resource.respond_to?(:virtualenv) && !resource.virtualenv.nil? && !system
-               resource.virtualenv
-             elsif resource.python_provider == 'portable_pypy3'
-               "/usr/local/pypy#{resource.python_version}"
-             else
-               '/usr/local/'
-             end
-
-      ::File.join(path)
+      if resource.respond_to?(:virtualenv) && !resource.virtualenv.nil? && !system
+        resource.virtualenv
+      elsif (pypy = pypy_version(resource))
+        "/usr/local/pypy#{pypy}"
+      else
+        '/usr/local/'
+      end
     end
 
     def self.pip_binary(resource = new_resource)
-      ::File.join(pip_path(resource), 'bin/pip3')
+      ::File.join(pip_path(resource, system: false), 'bin', resource.pip_binary_name)
     end
 
     def self.virtualenv_binary(resource = new_resource)
       ::File.join(pip_path(resource, system: true), 'bin/virtualenv')
+    end
+
+    def self.pypy_version(resource = new_resource)
+      return resource.version if resource.respond_to?(:source) && resource.source == 'portable_pypy3'
+      return resource.python_version if resource.respond_to?(:python_provider) && resource.python_provider == 'portable_pypy3'
     end
   end
 end
