@@ -16,19 +16,28 @@ property :virtualenv_version, [String, TrueClass, FalseClass], default: true
 
 load_current_value do |new_resource|
   python_binary = ::Python3::Path.python_binary(new_resource)
+  pip_binary = ::Python3::Path.pip_binary(new_resource)
 
-  current_value_does_not_exist! unless ::File.exist?(python_binary)
+  current_value_does_not_exist! unless ::File.exist?(python_binary) && ::File.exist?(pip_binary)
 
   if new_resource.source != 'portable_pypy3'
-    pyversion = ::Mixlib::ShellOut.new("#{python_binary} --version").run_command.stdout.match('\s+(^[0-9\.]+)')&.last_match(1)
-    version pyversion if new_resource.version
+    python_version = pyversion(python_binary)
+    pipv = pyversion(pip_binary)
+
+    version python_version if new_resource.version
+    pip_version pipv if new_resource.pip_version
   else
     version new_resource.version
+    pip_version new_resource.pip_version
   end
 end
 
+def pyversion(binary)
+  return Regexp.last_match(1) if ::Mixlib::ShellOut.new("#{binary} --version").run_command.stdout.match('\s+([0-9\.]+)')
+end
+
 action :install do
-  converge_if_changed :version do
+  converge_if_changed :version, :pip_version do
     valid_name_regex = /^python3\.?\d?$/
     if new_resource.source == 'portable_pypy3'
       package 'bzip2'

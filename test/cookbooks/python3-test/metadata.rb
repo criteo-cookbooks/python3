@@ -9,3 +9,5 @@ source_url       'https://github.com/criteo-cookbooks/python3'
 version          '0.1.0'
 supports         'centos'
 supports         'windows'
+
+depends          'python3'
