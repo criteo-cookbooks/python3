@@ -50,10 +50,6 @@ module Python3
       ::File.join(pip_path(resource, system: false), 'bin', resource.pip_binary_name)
     end
 
-    def self.virtualenv_binary(resource = new_resource)
-      ::File.join(pip_path(resource, system: true), 'bin/virtualenv')
-    end
-
     def self.pypy_version(resource = new_resource)
       return resource.version if resource.respond_to?(:source) && resource.source == 'portable_pypy3'
       return resource.python_version if resource.respond_to?(:python_provider) && resource.python_provider == 'portable_pypy3'
