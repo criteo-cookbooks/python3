@@ -18,7 +18,6 @@ node['python3_test']['pythons'].each_with_index do |python, idx|
 
   python_virtualenv "/opt/blah-#{idx}" do
     action :create
-    pip_binary_name python['pip_binary_name']
     binary_name python['binary_name']
   end
 

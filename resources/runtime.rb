@@ -25,8 +25,6 @@ load_current_value do |new_resource|
 end
 
 action :install do
-  get_pip_location = ::File.join(::Chef::Config['cache_path'], 'get-pip.py')
-
   python_install new_resource.python_name do
     version new_resource.python_version
     source new_resource.python_provider
@@ -38,20 +36,11 @@ action :install do
   end
 
   converge_if_changed :pip_version do
-    directory ::Chef::Config['cache_path'] do
-      action :create
-      recursive true
+    execute 'ensure_pip' do
+      command "#{::Python3::Path.python_binary(new_resource)} -m ensurepip"
     end
-
-    remote_file 'get-pip.py' do
-      source new_resource.get_pip_url
-      checksum new_resource.get_pip_checksum
-      path get_pip_location
-      action :create
-    end
-
     execute 'install_pip' do
-      command "#{::Python3::Path.python_binary(new_resource)} #{get_pip_location} --upgrade --force-reinstall pip==#{new_resource.pip_version} --no-setuptools --no-wheel"
+      command "#{::Python3::Path.python_binary(new_resource)} -m pip install --upgrade --force-reinstall pip==#{new_resource.pip_version}"
     end
   end
 
