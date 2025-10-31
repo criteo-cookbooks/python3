@@ -13,9 +13,9 @@ provisioner:
   named_run_list: test
 
 platforms:
-  - name: centos-8
+  - name: rockylinux-8
     driver:
-      image: 'dokken/centos-8'
+      image: 'dokken/rockylinux-8'
 
 suites:
   - name: python3
