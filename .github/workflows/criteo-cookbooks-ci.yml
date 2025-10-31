@@ -27,8 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        instance: ['python3-centos-7', 'python3-centos-8',
-                   'python3-pypy3-centos-7', 'python3-pypy3-centos-8']
+        instance: ['python3-centos-8', 'python3-pypy3-centos-8']
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
