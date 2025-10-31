@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'kitchen-vagrant'
+gem 'rspec-expectations', '3.12.3' # https://github.com/chef/chefspec/issues/13
 gem 'chefspec'
 gem 'rake'
 gem 'foodcritic'
