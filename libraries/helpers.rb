@@ -52,7 +52,8 @@ module Python3
 
     def self.pypy_version(resource = new_resource)
       return resource.version if resource.respond_to?(:source) && resource.source == 'portable_pypy3'
-      return resource.python_version if resource.respond_to?(:python_provider) && resource.python_provider == 'portable_pypy3'
+
+      resource.python_version if resource.respond_to?(:python_provider) && resource.python_provider == 'portable_pypy3'
     end
   end
 end
