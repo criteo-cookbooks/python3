@@ -6,18 +6,13 @@
 AllCops:
   TargetRubyVersion: 3.2
 
-
-# This requires to alphabetically sort Gem's requirements
-Bundler/OrderedGems:
-  Enabled: false
-
 # This requires to add a comment inside nearly all file which could be
 # considered as toil without value
 Style/FrozenStringLiteralComment:
   Enabled: false
 
 ### Disable line length constraint
-Metrics/LineLength:
+Layout/LineLength:
   Max: 180
 # Because we're not in the 80s anymore.
 # Based on data from http://sideeffect.kr/popularconvention#ruby
