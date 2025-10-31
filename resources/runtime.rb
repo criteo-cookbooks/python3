@@ -36,12 +36,12 @@ action :install do
   end
 
   converge_if_changed :pip_version do
-    execute 'ensure_pip' do
-      command "#{::Python3::Path.python_binary(new_resource)} -m ensurepip"
-    end
-    execute 'install_pip' do
-      command "#{::Python3::Path.python_binary(new_resource)} -m pip install --upgrade --force-reinstall pip==#{new_resource.pip_version}"
-    end
+    # Install ensurepip if missing
+    execute "#{::Python3::Path.python_binary(new_resource)} -m ensurepip"
+    # Upgrade ensurepip
+    execute "#{::Python3::Path.python_binary(new_resource)} -m ensurepip --upgrade"
+    # Upgrade pip to desired version
+    execute "#{::Python3::Path.python_binary(new_resource)} -m pip install --upgrade --force-reinstall pip==#{new_resource.pip_version}"
   end
 
   converge_if_changed :setuptools_version do
