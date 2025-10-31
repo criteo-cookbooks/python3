@@ -13,9 +13,6 @@ provisioner:
   named_run_list: test
 
 platforms:
-  - name: centos-7
-    driver:
-      image: 'dokken/centos-7'
   - name: centos-8
     driver:
       image: 'dokken/centos-8'
@@ -28,16 +25,12 @@ suites:
   - name: python39
     run_list:
       - recipe[python3-test::default]
-    excludes:
-      - centos-7
     attributes:
       python3:
         name: 'python39'
   - name: python39-36
     run_list:
       - recipe[python3-test::default]
-    excludes:
-      - centos-7
     attributes:
       python3_test:
         pythons:
