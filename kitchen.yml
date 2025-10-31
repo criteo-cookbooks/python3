@@ -60,12 +60,3 @@ suites:
         checksum: '46818cb3d74b96b34787548343d266e2562b531ddbaf330383ba930ff1930ed5'
         pip_binary_name: 'pip3.9'
         binary_name: 'pypy3.9'
-  - name: python3-chef-14
-    excludes:
-      # dnf provider on Chef < 16 is broken
-      - centos-8
-    run_list:
-      - recipe[python3-test::default]
-    attributes:
-    driver:
-      chef_version: 14.7.17

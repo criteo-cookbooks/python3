@@ -6,7 +6,7 @@ gem 'chefspec'
 gem 'rake'
 gem 'foodcritic'
 gem 'chef-zero-scheduled-task'
-gem 'chef', '= 14.7.17'
+gem 'chef', '~> 18.8'
 gem 'chef-dk'
 gem 'kitchen-dokken'
 
