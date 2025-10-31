@@ -33,7 +33,7 @@ load_current_value do |new_resource|
 end
 
 def pyversion(binary)
-  return Regexp.last_match(1) if ::Mixlib::ShellOut.new("#{binary} --version").run_command.stdout.match('\s+([0-9\.]+)')
+  Regexp.last_match(1) if ::Mixlib::ShellOut.new("#{binary} --version").run_command.stdout.match('\s+([0-9\.]+)')
 end
 
 action :install do
