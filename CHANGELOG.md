@@ -1,3 +1,8 @@
+1.0.0 (2025-11-03)
+------------------
+- Upgrade ensurepip module on pip upgrade, mostly to fix pip issues on Pthon 3.12
+- [Breaking] Drop supports for Chef 16 and under.
+
 0.1.6 (2023-10-03)
 ------------------
 - Fix Python package validation regex to support multi-digits minor version (i.e. >= 10)
